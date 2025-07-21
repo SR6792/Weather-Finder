@@ -27,16 +27,22 @@ async function fetchData() {
         const locationN=data.city.name.charAt(0).toUpperCase()+data.city.name.slice(1).toLowerCase();//only first letter caps
         locname.innerHTML=`<h1>Location:${locationN}</h1>`; 
         const temperature=data.list[0].main.temp;
-        temp.innerHTML=`<h1>Temp:${temperature}</h1>`;
-        if(data.list[0].weather[0].main.includes("Clear")){
+        const celc=temperature-273.15;
+        const roc=Math.round(celc);
+        temp.innerHTML=`<h1>Temp:${roc} C</h1>`;
+        if(data.list[0].weather[0].main.toLowerCase().includes("Clear")){
             img.src="sun.jpg";
         }
-        else if(data.list[0].weather[0].main.includes("Rain")){
+        else if(data.list[0].weather[0].main.toLowerCase().includes("Rain")){
             img.src="rainy.png";
         }
         else{
             img.src="cloudy.jpg";
         }
+        const humis=data.list[0].main.humidity;
+        humid.innerHTML=`<h1>Humidity:${humis}<h1>`;
+        const winds=data.list[0].wind.speed;
+        windspeed.innerHTML=`<h1>Wind Speed:${winds}<h1>`;
     }
     catch(error){
         console.error(error);
